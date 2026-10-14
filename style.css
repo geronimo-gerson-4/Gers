@@ -1,0 +1,277 @@
+/* ==========================================================
+   Portfolio stylesheet
+   Sections: 1 Variables, 2 Base, 3 Header, 4 Hero,
+             5 Projects, 6 Footer, 7 Responsive
+   ========================================================== */
+
+/* ---------- 1. Color and type variables ---------- */
+:root {
+  --bg: #f2f5fb;          /* page background */
+  --surface: #ffffff;     /* cards and header */
+  --ink: #14213d;         /* main text */
+  --muted: #4d5b78;       /* secondary text */
+  --accent: #2b50f0;      /* links, buttons */
+  --accent-ink: #ffffff;  /* text on accent */
+  --highlight: #ffc93c;   /* photo block, hover underline */
+  --line: #d9e0ef;        /* borders */
+
+  --font-head: "Bricolage Grotesque", "Segoe UI", sans-serif;
+  --font-body: "DM Sans", "Segoe UI", sans-serif;
+}
+
+/* Dark theme: JS sets data-theme="dark" on the <html> element */
+[data-theme="dark"] {
+  --bg: #0f1630;
+  --surface: #182142;
+  --ink: #eef2ff;
+  --muted: #aab5d3;
+  --accent: #8ea2ff;
+  --accent-ink: #0f1630;
+  --line: #2b3760;
+}
+
+/* ---------- 2. Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  transition: background 0.3s, color 0.3s;
+}
+
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 700; }
+h3 { font-size: 1.3rem; font-weight: 700; }
+
+a { color: var(--accent); }
+img { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
+
+/* Visible keyboard focus */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--highlight);
+  outline-offset: 3px;
+}
+
+/* Reusable centered container */
+.container { width: min(100% - 2.5rem, 70rem); margin-inline: auto; }
+
+/* ---------- 3. Header / navigation ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  display: flex;                 /* Flexbox: brand left, links right */
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4rem;
+}
+
+.brand {
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; align-items: center; gap: 1.75rem; }
+
+.nav-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  padding-block: 0.25rem;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+.nav-links a:hover { border-bottom-color: var(--highlight); }
+
+.theme-toggle {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.theme-toggle:hover { border-color: var(--accent); background: var(--bg); }
+
+/* Hamburger button: hidden on desktop */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.nav-toggle .bar {
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin: 5px 0;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+}
+/* Turn the three bars into an X when the menu is open */
+.nav-toggle.open .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-toggle.open .bar:nth-child(2) { opacity: 0; }
+.nav-toggle.open .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ---------- 4. Hero / About ---------- */
+.hero {
+  display: grid;                 /* Grid: text and photo side by side */
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+  gap: 3rem;
+  padding-block: 5rem;
+}
+
+.hero-text > * + * { margin-top: 1.25rem; }
+.lead { font-size: 1.2rem; font-weight: 500; }
+.hero-text p { max-width: 60ch; color: var(--muted); }
+.hero-text .lead { color: var(--ink); }
+
+.skills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.skills li {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 0.25rem 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.6rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 6px 0 var(--highlight); }
+
+/* Photo with an offset color block behind it */
+.hero-photo { justify-self: center; position: relative; width: min(100%, 22rem); }
+.hero-photo::before {
+  content: "";
+  position: absolute;
+  inset: 1.2rem -1.2rem -1.2rem 1.2rem;
+  background: var(--highlight);
+  border-radius: 1.5rem;
+}
+.hero-photo img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  border: 3px solid var(--ink);
+}
+
+/* ---------- 5. Projects ---------- */
+.projects { padding-block: 4rem 5rem; }
+.section-intro { color: var(--muted); margin-top: 0.5rem; margin-bottom: 2rem; }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 8px solid var(--card-color, var(--accent)); /* color shows the platform */
+  border-radius: 0.9rem;
+  padding: 1.5rem;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover { transform: translateY(-6px); border-color: var(--card-color, var(--accent)); }
+.card p { color: var(--muted); }
+.card .tags { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-top: auto; }
+
+.card-flutter { --card-color: #2b9fd9; }
+.card-figma   { --card-color: #a259ff; }
+.card-php     { --card-color: #6c7bd1; }
+
+.card-link { font-weight: 700; }
+
+/* ---------- 6. Footer / contact ---------- */
+.site-footer {
+  background: var(--ink);
+  color: var(--bg);
+  padding-block: 4rem 1.5rem;
+}
+[data-theme="dark"] .site-footer { background: #0a0f24; color: var(--ink); }
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.site-footer p { max-width: 38ch; margin-top: 0.5rem; opacity: 0.85; }
+
+.contact-list { display: grid; gap: 0.6rem; align-content: start; }
+.contact-list a {
+  color: var(--highlight);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.contact-list a:hover { border-bottom-color: var(--highlight); }
+
+.copyright { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; max-width: none !important; }
+
+/* ---------- 7. Responsive ---------- */
+@media (max-width: 800px) {
+  /* Stack hero, photo goes first */
+  .hero { grid-template-columns: 1fr; padding-block: 3rem; gap: 2.5rem; }
+  .hero-photo { order: -1; width: min(80%, 18rem); margin-right: 1.2rem; }
+
+  /* Show hamburger, turn the links into a dropdown panel */
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.25rem 1.5rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-links.open { display: flex; }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
